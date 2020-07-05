@@ -31,22 +31,23 @@ const namesState = atom({
   default: ['Ella', 'Chris', 'Paul'],
 });
 
-function NameInput() {
+function FormContent({setNamesState}) {
   const [name, setName] = useState('');
-  const setNamesState = useSetRecoilState(namesState);
-
-  const addName = () => {
-    setNamesState(existingNames => [...existingNames, name]);
-  };
-
-  const onChange = (e) => {
-    setName(e.target.value);
-  };
-
+  
   return (
     <>
-      <input type="text" value={name} onChange={onChange} />
-      <button onClick={addName}>Add Name</button>
+      <input type="text" value={name} onChange={(e) => onChange(e.target.value)} />
+      <button onClick={() => setNamesState(name)}>Add Name</button>
+    </>
+)}
+
+function Form() {
+  const setNamesState = useSetRecoilState(namesState);
+  // this component will be rendered once to mount
+  
+  return (
+    <>
+      <FormContent setNamesState={setNamesState} />
     </>
   );
 }
